@@ -32,9 +32,12 @@ async function getProduct(url) {
 function joinAdditionalProducts(listOfProducts) {
     const allProducts = [];
     listOfProducts.map((products) => {
-        const { additionalProducts, ...product } = products;
-        allProducts.push(additionalProducts);
-        allProducts.push(product);
+        if (!products) return null;
+        if (products.additionalProducts) {
+            const { additionalProducts, ...product } = products;
+            allProducts.push(additionalProducts);
+        }
+        allProducts.push(products);
     });
     return allProducts.flat();
 }
