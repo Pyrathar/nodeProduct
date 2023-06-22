@@ -20,20 +20,16 @@ jobs:
       - name: Run bash script
         run: bash ./changelog.sh $BRANCH_NAME
 
-      - name: Install jq
-        run: sudo apt-get install jq
-
-      - name: Get approving user information
-        id: approving-user
+      - name: Get branch creator information
+        id: branch-creator
         run: |
-          pull_request_url=$(jq -r '.pull_request.url' "$GITHUB_EVENT_PATH")
-          approving_user_login=$(gh pr review-list $pull_request_url --json | jq -r '.reviews[] | select(.state == "APPROVED") | .user.login')
-          echo "APPROVING_USER_LOGIN=$approving_user_login" >> $GITHUB_ENV
+          branch_creator_login=$(gh pr view ${{ github.event.pull_request.number }} --json user.login | jq -r '.user.login')
+          echo "BRANCH_CREATOR_LOGIN=$branch_creator_login" >> $GITHUB_ENV
 
       - name: Set Git user.name and user.email
         run: |
-          git config --global user.name "${APPROVING_USER_LOGIN}"
-          git config --global user.email "${APPROVING_USER_LOGIN}@users.noreply.github.com"
+          git config --global user.name "${BRANCH_CREATOR_LOGIN}"
+          git config --global user.email "${BRANCH_CREATOR_LOGIN}@users.noreply.github.com"
 
       - name: Commit and push changes
         run: |
