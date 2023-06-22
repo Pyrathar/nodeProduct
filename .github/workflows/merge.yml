@@ -36,9 +36,6 @@ jobs:
             git config --global user.email "${BRANCH_CREATOR_LOGIN}@users.noreply.github.com"
           fi
 
-      - name: Update local branch
-        run: git pull origin $BRANCH_NAME
-
       - name: Commit and push changes
         run: |
           git status
