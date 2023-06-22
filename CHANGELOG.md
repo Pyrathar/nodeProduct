@@ -19,6 +19,7 @@ This changelog is also for non-developers, so reduce technical explanations to a
 
 ## 22-06-2023
 ### Changed
+- [HOTFIX](https://linear.app/penneo/issue/HOTFIX) asfasdfasjdfnasjkdfasfasdfasjdfnasjkdf
 - [HOTFIX](https://linear.app/penneo/issue/HOTFIX) mainmain
 - [HOTFIX](https://linear.app/penneo/issue/HOTFIX) modoamodoa
 - [HOTFIX](https://linear.app/penneo/issue/HOTFIX) modoamodoa
