@@ -88,8 +88,7 @@ branch=$(git rev-parse --abbrev-ref HEAD)
 kyc_number=$(echo "$branch" | grep -oEi 'KYC-[[:digit:]]+')
 
 if [ -z "$kyc_number" ]; then
-  echo "No KYC number in your branch"
-  exit 1
+  $kyc_number="Hotfix"
 fi
 
 #Upper case it justin case (yes pun intented)
