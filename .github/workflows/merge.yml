@@ -43,3 +43,14 @@ jobs:
           git commit -m "Automatic Changelog Updates"
           git status
           git push --force origin HEAD:$BRANCH_NAME
+
+      - name: Merge with develop
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+           echo "machine github.com login $GH_TOKEN" > ~/.netrc
+           git fetch
+           git checkout develop
+           git pull origin develop
+           git merge $BRANCH_NAME
+           git push origin develop
