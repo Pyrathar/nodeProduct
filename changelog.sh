@@ -100,7 +100,7 @@ uppercase_kyc_number=$(echo "$kyc_number" | tr '[:lower:]' '[:upper:]')
 
 #Creates the final message
 if [[ "$kyc_number" == "Hotfix" ]]; then
-    formated_message="- [$uppercase_kyc_number](https://linear.app/penneo/issue/$uppercase_kyc_number) $finalChangelogMessage" 
+    formated_message="- [$uppercase_kyc_number] $finalChangelogMessage" 
 else
     formated_message="- [$kyc_number] $finalChangelogMessage" 
 fi
