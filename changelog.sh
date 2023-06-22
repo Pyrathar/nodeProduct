@@ -98,14 +98,6 @@ uppercase_kyc_number=$(echo "$kyc_number" | tr '[:lower:]' '[:upper:]')
 #Creates the final message
 formated_message="- [$uppercase_kyc_number](https://linear.app/penneo/issue/$uppercase_kyc_number) [$choice] $changelog_message" 
 
-IFS=$'\n'
-# Prompt the user with a multi-line message
-read -r -d '' prompt_message << EOM
-Alright writing!
-$formated_message 
-Does this look OK? (Enter to accept):
-EOM
-
 # Display the prompt message and read the response
 read -p $'\n'"$prompt_message" response
 
