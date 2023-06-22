@@ -40,7 +40,7 @@ jobs:
 
       - name: Merge with develop
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "machine github.com login $GITHUB_TOKEN" > ~/.netrc
+          echo "machine github.com login $GH_TOKEN" > ~/.netrc
           gh pr merge ${{ github.event.pull_request.number }} --auto-merge --merge-to develop

@@ -74,10 +74,7 @@ mv temp_file "$file_path"
 fi
 }
 
-# Prompt the user for input
-echo "Write a very descriptive message to be included in the changelog:"
-
-# Capture user input and store it in a variable
+# Capture input and store it in a variable
 changelog_message=$1
 
 # Get the current branch name
