@@ -28,8 +28,13 @@ jobs:
 
       - name: Set Git user.name and user.email
         run: |
-          git config --global user.name "${BRANCH_CREATOR_LOGIN}"
-          git config --global user.email "${BRANCH_CREATOR_LOGIN}@users.noreply.github.com"
+          if [[ -z $BRANCH_CREATOR_LOGIN ]]; then
+            git config --global user.name "Git User"
+            git config --global user.email "gituser@example.com"
+          else
+            git config --global user.name "${BRANCH_CREATOR_LOGIN}"
+            git config --global user.email "${BRANCH_CREATOR_LOGIN}@users.noreply.github.com"
+          fi
 
       - name: Commit and push changes
         run: |
