@@ -18,7 +18,7 @@ jobs:
         run: echo "BRANCH_NAME=${GITHUB_HEAD_REF}" >> $GITHUB_ENV
 
       - name: Run bash script
-        run: bash changelog.sh $BRANCH_NAME
+        run: bash /changelog.sh $BRANCH_NAME
 
       - name: Get approving user information
         id: approving-user
@@ -34,7 +34,7 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git add <file(s) modified by the script>
+          git add CHANGELOG.md
           git commit -m "Changes made by script"
           git push origin HEAD:$BRANCH_NAME
 
