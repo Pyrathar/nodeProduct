@@ -96,14 +96,5 @@ uppercase_kyc_number=$(echo "$kyc_number" | tr '[:lower:]' '[:upper:]')
 
 #Creates the final message
 formated_message="- [$uppercase_kyc_number](https://linear.app/penneo/issue/$uppercase_kyc_number) [$choice] $changelog_message" 
+write_in_changelog "$formated_message";
 
-# Display the prompt message and read the response
-read -p $'\n'"$prompt_message" response
-
-# Check the response
-if [[ "$response" =~ ^[Yy]$|^$ ]]; then
-    write_in_changelog "$formated_message";
-else
-    echo "Stopping."
-    exit 0
-fi
