@@ -49,4 +49,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
            echo "machine github.com login $GH_TOKEN" > ~/.netrc
-           gh pr merge ${{ github.event.pull_request.number }} --merge --destination develop
+           gh pr merge ${{ github.event.pull_request.number }} --merge --repo Pyrathar/nodeProduct --head $BRANCH_NAME --base develop
