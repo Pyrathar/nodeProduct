@@ -45,7 +45,7 @@ jobs:
           git add CHANGELOG.md
           git commit -m "Changes made by script"
           git status
-          git push origin HEAD:$BRANCH_NAME
+          git push --force origin HEAD:$BRANCH_NAME
 
       - name: Merge with develop
         env:
