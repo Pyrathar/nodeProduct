@@ -38,12 +38,10 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git status
           git stash
           git checkout develop
           git pull
           git stash apply
           git add CHANGELOG.md
           git commit -m "Automatic Changelog Updates"
-          git status
           git push --force
