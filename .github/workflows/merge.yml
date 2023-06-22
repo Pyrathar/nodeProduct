@@ -13,11 +13,14 @@ jobs:
       - name: Check if pull request was merged
         if: github.event.pull_request.merged == true
         id: check_merged
+        run: echo "Pull request merged"
 
       - name: Prompt for input
         if: steps.check_merged.outputs.result == 'true'
-        uses: some-action-with-interactive-prompt@v1
-        id: user_input
+        run: |
+          echo "Please provide input"
+          read user_input
+          echo "User input: $user_input"
 
       - name: Process user input
         if: steps.user_input.outputs.input != ''
