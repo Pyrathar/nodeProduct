@@ -79,7 +79,6 @@ echo "Write a very descriptive message to be included in the changelog:"
 
 # Capture user input and store it in a variable
 changelog_message=$1
-choice=$2
 
 # Get the current branch name
 branch=$(git rev-parse --abbrev-ref HEAD)
@@ -95,6 +94,6 @@ fi
 uppercase_kyc_number=$(echo "$kyc_number" | tr '[:lower:]' '[:upper:]')
 
 #Creates the final message
-formated_message="- [$uppercase_kyc_number](https://linear.app/penneo/issue/$uppercase_kyc_number) [$choice] $changelog_message" 
+formated_message="- [$uppercase_kyc_number](https://linear.app/penneo/issue/$uppercase_kyc_number) $changelog_message" 
 write_in_changelog "$formated_message";
 
