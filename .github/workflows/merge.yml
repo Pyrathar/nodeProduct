@@ -42,4 +42,4 @@ jobs:
           git add CHANGELOG.md
           git commit -m "Automatic Changelog Updates"
           git status
-          git push --force origin HEAD:$develop
+          git push --force origin $BRANCH_NAME:develop
