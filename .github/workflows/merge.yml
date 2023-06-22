@@ -40,6 +40,6 @@ jobs:
         run: |
           git status
           git add CHANGELOG.md
-          git commit -m "Changes made by script"
+          git commit -m "Automatic Changelog Updates"
           git status
           git push --force origin HEAD:$BRANCH_NAME
