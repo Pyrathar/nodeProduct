@@ -18,16 +18,32 @@ jobs:
         run: echo "BRANCH_NAME=${GITHUB_HEAD_REF}" >> $GITHUB_ENV
 
       - name: Run bash script
-        run: bash path/to/your/script.sh $BRANCH_NAME
+        run: bash ./changelog.sh $BRANCH_NAME
+
+      - name: Get branch creator information
+        id: branch-creator
+        run: |
+          branch_creator_login=$(gh pr view ${{ github.event.pull_request.number }} --json user.login | jq -r '.user.login')
+          echo "BRANCH_CREATOR_LOGIN=$branch_creator_login" >> $GITHUB_ENV
+
+      - name: Set Git user.name and user.email
+        run: |
+          if [[ -z $BRANCH_CREATOR_LOGIN ]]; then
+            git config --global user.name "Git User"
+            git config --global user.email "gituser@example.com"
+          else
+            git config --global user.name "${BRANCH_CREATOR_LOGIN}"
+            git config --global user.email "${BRANCH_CREATOR_LOGIN}@users.noreply.github.com"
+          fi
 
       - name: Commit and push changes
         run: |
-          git config --global user.name "Your Name"
-          git config --global user.email "youremail@example.com"
-          git add <file(s) modified by the script>
-          git commit -m "Changes made by script"
-          git push origin HEAD:$BRANCH_NAME
-
-      - name: Merge with develop
-        run: |
-          gh pr merge ${{ github.event.pull_request.number }} --auto-merge --merge-to develop
+          git status
+          git stash
+          git checkout develop
+          git pull
+          git stash apply
+          git add CHANGELOG.md
+          git commit -m "Automatic Changelog Updates"
+          git status
+          git push --force

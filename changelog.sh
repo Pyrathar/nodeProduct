@@ -74,12 +74,16 @@ mv temp_file "$file_path"
 fi
 }
 
-# Prompt the user for input
-echo "Write a very descriptive message to be included in the changelog:"
-
-# Capture user input and store it in a variable
+# Capture input and store it in a variable
 changelog_message=$1
-choice=$2
+
+# Extract the first character before the first hyphen
+first_character=$(echo "$changelog_message" | awk -F'-' '{print $1}')
+
+# Replace all hyphens with spaces, starting from the second occurrence
+replaced_string=$(echo "$changelog_message" | sed 's/-/ /' | sed 's/-/ /g')
+
+finalChangelogMessage="$first_character$replaced_string"
 
 # Get the current branch name
 branch=$(git rev-parse --abbrev-ref HEAD)
@@ -88,13 +92,17 @@ branch=$(git rev-parse --abbrev-ref HEAD)
 kyc_number=$(echo "$branch" | grep -oEi 'KYC-[[:digit:]]+')
 
 if [ -z "$kyc_number" ]; then
-  $kyc_number="Hotfix"
+  kyc_number="Hotfix"
 fi
 
 #Upper case it justin case (yes pun intented)
 uppercase_kyc_number=$(echo "$kyc_number" | tr '[:lower:]' '[:upper:]')
 
 #Creates the final message
-formated_message="- [$uppercase_kyc_number](https://linear.app/penneo/issue/$uppercase_kyc_number) [$choice] $changelog_message" 
+if [[ "$kyc_number" == "Hotfix" ]]; then
+    formated_message="- [$uppercase_kyc_number](https://linear.app/penneo/issue/$uppercase_kyc_number) $finalChangelogMessage" 
+else
+    formated_message="- [$kyc_number] $finalChangelogMessage" 
+fi
+formated_message="- [$uppercase_kyc_number](https://linear.app/penneo/issue/$uppercase_kyc_number) $finalChangelogMessage" 
 write_in_changelog "$formated_message";
-
