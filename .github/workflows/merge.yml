@@ -18,7 +18,7 @@ jobs:
         run: echo "BRANCH_NAME=${GITHUB_HEAD_REF}" >> $GITHUB_ENV
 
       - name: Run bash script
-        run: bash ./changelog.sh $BRANCH_NAME
+        run: bash changelog.sh $BRANCH_NAME
 
       - name: Get approving user information
         id: approving-user
@@ -34,12 +34,13 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git add CHANGELOG.md
-          git commit -m "Changelog updates"
+          git add <file(s) modified by the script>
+          git commit -m "Changes made by script"
           git push origin HEAD:$BRANCH_NAME
 
       - name: Merge with develop
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          echo "machine github.com login $GITHUB_TOKEN" > ~/.netrc
           gh pr merge ${{ github.event.pull_request.number }} --auto-merge --merge-to develop
