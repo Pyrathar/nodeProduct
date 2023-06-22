@@ -87,7 +87,7 @@ branch=$(git rev-parse --abbrev-ref HEAD)
 kyc_number=$(echo "$branch" | grep -oEi 'KYC-[[:digit:]]+')
 
 if [ -z "$kyc_number" ]; then
-  $kyc_number="Hotfix"
+  kyc_number="Hotfix"
 fi
 
 #Upper case it justin case (yes pun intented)
