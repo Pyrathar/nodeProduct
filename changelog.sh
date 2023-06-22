@@ -106,4 +106,3 @@ else
 fi
 formated_message="- [$uppercase_kyc_number](https://linear.app/penneo/issue/$uppercase_kyc_number) $finalChangelogMessage" 
 write_in_changelog "$formated_message";
-
