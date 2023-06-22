@@ -17,6 +17,10 @@ This changelog is also for non-developers, so reduce technical explanations to a
 # Changes
 ## Unreleased
 
+## 22-06-2023
+### Changed
+- [HOTFIX](https://linear.app/penneo/issue/HOTFIX) KYC-2000-im-going-to-do-my-best!
+
 ## 21-06-2023
 ### Added
 - [KYC-1826](https://linear.app/asd/issue/KYC-1826) Add endpoints to activate and deactivate cases.
