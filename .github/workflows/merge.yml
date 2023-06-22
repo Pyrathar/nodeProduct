@@ -36,12 +36,15 @@ jobs:
             git config --global user.email "${BRANCH_CREATOR_LOGIN}@users.noreply.github.com"
           fi
 
+      - name: Update local branch
+        run: git pull origin $BRANCH_NAME
+
       - name: Commit and push changes
         run: |
-          git pull
           git status
           git add CHANGELOG.md
           git commit -m "Changes made by script"
+          git status
           git push origin HEAD:$BRANCH_NAME
 
       - name: Merge with develop
