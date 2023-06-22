@@ -38,6 +38,8 @@ jobs:
 
       - name: Commit and push changes
         run: |
+          git pull
+          git status
           git add CHANGELOG.md
           git commit -m "Changes made by script"
           git push origin HEAD:$BRANCH_NAME
