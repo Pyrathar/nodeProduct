@@ -1,4 +1,4 @@
-name: Merge Workflow
+name: Merge to Develop Workflow
 
 on:
   pull_request:
@@ -6,23 +6,40 @@ on:
       - closed
 
 jobs:
-  merge_job:
+  merge-to-develop:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check if pull request was merged
-        if: github.event.pull_request.merged == true
-        id: check_merged
-        run: echo "Pull request merged"
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Prompt for input
-        if: steps.check_merged.outputs.result == 'true'
-        run: |
-          echo "Please provide input"
-          read user_input
-          echo "User input: $user_input"
+      - name: Set up branch name
+        id: branch-name
+        run: echo "BRANCH_NAME=${GITHUB_HEAD_REF}" >> $GITHUB_ENV
 
-      - name: Process user input
-        if: steps.user_input.outputs.input != ''
+      - name: Run bash script
+        run: bash ./changelog.sh $BRANCH_NAME
+
+      - name: Get approving user information
+        id: approving-user
         run: |
-          echo "User input: ${{ steps.user_input.outputs.input }}"
+          pull_request_url=$(jq -r '.pull_request.url' "$GITHUB_EVENT_PATH")
+          approving_user_login=$(gh api $pull_request_url/reviews --jq '.[] | select(.state == "APPROVED") | .user.login' -H 'Accept: application/vnd.github.v3+json')
+          echo "APPROVING_USER_LOGIN=$approving_user_login" >> $GITHUB_ENV
+
+      - name: Set Git user.name and user.email
+        run: |
+          git config --global user.name "${APPROVING_USER_LOGIN}"
+          git config --global user.email "${APPROVING_USER_LOGIN}@users.noreply.github.com"
+
+      - name: Commit and push changes
+        run: |
+          git add CHANGELOG.md
+          git commit -m "Changelog updates"
+          git push origin HEAD:$BRANCH_NAME
+
+      - name: Merge with develop
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr merge ${{ github.event.pull_request.number }} --auto-merge --merge-to develop
