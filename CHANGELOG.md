@@ -17,6 +17,10 @@ This changelog is also for non-developers, so reduce technical explanations to a
 # Changes
 ## Unreleased
 
+## 23-06-2023
+### Changed
+- [HOTFIX](https://linear.app/penneo/issue/HOTFIX) KYCKYC 2300 made changes to the linting
+
 ## 22-06-2023
 ### Changed
 - [HOTFIX](https://linear.app/penneo/issue/HOTFIX) asfasdfasjdfnasjkdfasfasdfasjdfnasjkdf
